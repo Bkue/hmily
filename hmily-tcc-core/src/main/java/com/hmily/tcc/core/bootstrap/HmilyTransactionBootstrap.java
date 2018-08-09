@@ -27,6 +27,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
+ * 它继承 TccConfig 能获取在xml配置的属性信息，实现 ApplicationContextAware
+ * 当spring容器初始化的时候，会自动的将ApplicationContext注入进来
  * hmily bootstrap.
  * @author xiaoyu
  */
@@ -41,6 +43,7 @@ public class HmilyTransactionBootstrap extends TccConfig implements ApplicationC
 
     @Override
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+        //保存spring的上下文
         SpringBeanUtils.getInstance().setCfgContext((ConfigurableApplicationContext) applicationContext);
         start(this);
     }

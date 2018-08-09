@@ -70,6 +70,8 @@ public class HmilyInitServiceImpl implements HmilyInitService {
     public void initialization(final TccConfig tccConfig) {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> LOGGER.info("hmily shutdown now")));
         try {
+            //加载spi配置，把spi的配置注入成spring的bean 方便后续的使用
+            //就是框架所支持的序列化，存储方式
             loadSpiSupport(tccConfig);
             hmilyTransactionEventPublisher.start(tccConfig.getBufferSize());
             coordinatorService.start(tccConfig);

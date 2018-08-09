@@ -30,14 +30,14 @@ import org.springframework.stereotype.Service;
 
 /**
  * CoordinatorServiceImpl.
+ *
  * @author xiaoyu
  */
 @Service("coordinatorService")
 public class CoordinatorServiceImpl implements CoordinatorService {
 
-    private CoordinatorRepository coordinatorRepository;
-
     private final RpcApplicationService rpcApplicationService;
+    private CoordinatorRepository coordinatorRepository;
 
     @Autowired
     public CoordinatorServiceImpl(final RpcApplicationService rpcApplicationService) {
@@ -47,8 +47,11 @@ public class CoordinatorServiceImpl implements CoordinatorService {
     @Override
     public void start(final TccConfig tccConfig) {
         final String repositorySuffix = buildRepositorySuffix(tccConfig.getRepositorySuffix());
+        //获取上一步加载的spi资源信息
         coordinatorRepository = SpringBeanUtils.getInstance().getBean(CoordinatorRepository.class);
+        //初始化spi 协调资源存储,就是根据spi思想来具体初始化
         coordinatorRepository.init(repositorySuffix, tccConfig);
+        //定时执行补偿
         new ScheduledService(tccConfig, coordinatorRepository).scheduledRollBack();
     }
 

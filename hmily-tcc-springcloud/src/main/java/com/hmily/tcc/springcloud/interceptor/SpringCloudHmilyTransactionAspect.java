@@ -36,6 +36,10 @@ public class SpringCloudHmilyTransactionAspect extends AbstractTccTransactionAsp
         this.setTccTransactionInterceptor(springCloudHmilyTransactionInterceptor);
     }
 
+    /**
+     * 设置切面的优先级为最高
+     * @return
+     */
     @Override
     public int getOrder() {
         return Ordered.HIGHEST_PRECEDENCE;

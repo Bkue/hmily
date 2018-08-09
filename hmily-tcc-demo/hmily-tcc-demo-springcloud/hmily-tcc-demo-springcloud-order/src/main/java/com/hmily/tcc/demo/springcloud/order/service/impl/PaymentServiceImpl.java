@@ -65,6 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     @Override
+    //tcc分布式事务的发起者
     @Tcc(confirmMethod = "confirmOrderStatus", cancelMethod = "cancelOrderStatus")
     public void makePayment(Order order) {
 
