@@ -30,22 +30,33 @@
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
        default-autowire="byName">
 
+    <!--扫描框架的包-->
     <context:component-scan base-package="com.hmily.tcc.*"/>
+
+    <!-- Aspect 切面配置，是否开启AOP切面-->
     <aop:aspectj-autoproxy expose-proxy="true"/>
+
+    <!--启动类属性配置-->
     <bean id="hmilyTransactionBootstrap" class="com.hmily.tcc.core.bootstrap.HmilyTransactionBootstrap">
+        <!--数据保存序列化方式  spi扩展支持 java kroy，hessian protostuff 推荐使用kroy-->
         <property name="serializer" value="kryo"/>
+        <!--事务延迟多少时间恢复，单位秒-->
         <property name="recoverDelayTime" value="120"/>
+        <!--事务执行失败最大重试次数-->
         <property name="retryMax" value="30"/>
+        <!--调度线程池间隔时间 单位秒-->
         <property name="scheduledDelay" value="120"/>
+        <!--调度线程池最大线程数-->
         <property name="scheduledThreadMax" value="4"/>
+        <!--配置补偿类型为db-->
         <property name="repositorySupport" value="db"/>
         <property name="tccDbConfig">
             <bean class="com.hmily.tcc.common.config.TccDbConfig">
                 <property name="url"
-                          value="jdbc:mysql://192.168.1.68:3306/tcc?useUnicode=true&amp;characterEncoding=utf8"/>
+                          value="jdbc:mysql://127.0.0.1:3306/tcc?useUnicode=true&amp;characterEncoding=utf8"/>
                 <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-                <property name="username" value="xiaoyu"/>
-                <property name="password" value="Wgj@555888"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
             </bean>
         </property>
     </bean>
